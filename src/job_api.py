@@ -53,3 +53,23 @@ class HHAPI(JobAPI):
                 raise ValueError("Ответ не содержит список 'items'.")
         else:
             raise Exception("Ошибка при запросе к API")
+
+    def get_companies_and_vacancies(self, companies: List[str]) -> List[Dict[str, Any]]:
+        """Метод для получения вакансий по списку компаний"""
+        vacancies_data = []
+        for company in companies:
+            params = {"employer_id": company}
+            response = self.__session.get(self.__BASE_URL, params=params)
+            if response.status_code == 200:
+                vacancies = response.json().get('items', [])
+                for vacancy in vacancies:
+                    vacancies_data.append({
+                        'company': company,
+                        'title': vacancy['name'],
+                        'salary': vacancy.get('salary', {}).get('from', None),
+                        'link': vacancy['alternate_url']
+                    })
+            else:
+                raise Exception(f"Ошибка при запросе вакансий для компании {company}")
+        return vacancies_data
+
