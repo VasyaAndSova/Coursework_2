@@ -3,7 +3,7 @@ from src.db_manager import DBManager
 from src.hh_api import HHAPI
 from src.user_interface import user_interface
 
-#from src.job_api import HHAPI
+# from src.job_api import HHAPI
 # from src.vacancy import Vacancy
 # from src.vacancy_manager import JsonVacancyManager
 # from src.user_interaction import user_interaction
@@ -43,10 +43,10 @@ from src.user_interface import user_interface
 
 def main():
     params = config()
-    create_database("HH", params)
+    create_database("hh", params)
 
     db_manager = DBManager()
-    db_manager.init({"dbname": "HH", **params})
+    db_manager.init({"dbname": "hh", **params})
 
     hh_api = HHAPI()
     company_names = [
@@ -63,7 +63,7 @@ def main():
     ]
 
     companies_data = hh_api.fetch_companies(company_names)
-    insert_data_into_db("HH", params, companies_data)
+    insert_data_into_db("hh", params, companies_data)
 
     # Запускаем пользовательский интерфейс
     user_interface(db_manager)

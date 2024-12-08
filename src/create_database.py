@@ -43,7 +43,8 @@ def create_database(database_name: str, params: dict) -> None:
                     title VARCHAR(255) NOT NULL,
                     salary NUMERIC,
                     url VARCHAR(255) NOT NULL,
-                    company_name VARCHAR(255) NOT NULL
+                    company_name VARCHAR(255) NOT NULL,
+                    FOREIGN KEY (company_name) REFERENCES companies(name) ON DELETE CASCADE
                 )
             """
             )

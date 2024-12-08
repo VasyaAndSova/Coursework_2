@@ -32,8 +32,9 @@ class DBManager:
         with self.connection.cursor() as cur:
             cur.execute(
                 """
-                SELECT title, salary, url, company_name
-                FROM vacancies
+                SELECT v.title, v.salary, v.url, c.name AS company_name
+                FROM vacancies v
+                JOIN companies c ON v.company_name = c.name
             """
             )
             result = cur.fetchall()
